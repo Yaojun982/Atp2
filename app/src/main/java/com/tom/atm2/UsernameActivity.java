@@ -2,6 +2,7 @@ package com.tom.atm2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.widget.EditText;
 
 public class UsernameActivity extends AppCompatActivity {
     private EditText name1;
-    private String name;
 
 
     @Override
@@ -19,18 +19,17 @@ public class UsernameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username);
         name1 = findViewById(R.id.hname);
-        name = name1.getText().toString();
     }
     public void toemail (View view){
-
-        Intent intent = new Intent(UsernameActivity.this,EmailActivity.class);
-        SharedPreferences pref = getSharedPreferences("test",MODE_PRIVATE);
-        pref.edit()
-                .putString("name", name)
+        SharedPreferences pref = getSharedPreferences("test", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String name = name1.getText().toString();
+        editor.putString("name", name)
                 .commit();
         Log.d("UserM", "toemail: "+name);
         UsernameActivity.this.setResult(RESULT_OK);
-        startActivityForResult(intent,1);
+        Intent intent = new Intent(UsernameActivity.this,EmailActivity.class);
+        startActivity(intent);
         finish();
     }
 }

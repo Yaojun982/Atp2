@@ -3,6 +3,7 @@ package com.tom.atm2;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        String s = getSharedPreferences("test",MODE_PRIVATE).getString("name","");
-        Log.d(TAG, "onActivityResult: "+s);
-    }
+
 
 
 
@@ -49,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_REQUIST) {
             if (resultCode == RESULT_OK) {
-                String s = getSharedPreferences("test",MODE_PRIVATE)
-                        .getString("name","");
-                Log.d(TAG, "onActivityResult: "+s);
-                username1.setText(getSharedPreferences("test", MODE_PRIVATE)
-                        .getString("name", ""));
+                SharedPreferences pref= getSharedPreferences("test", Context.MODE_PRIVATE);
+                String s = pref.getString("name","");
+                String a = pref.getString("email","");
+                String p = pref.getString("password","");
+                Log.d(TAG, "onActivityResult: "+s+","+a+","+p);
+                username1.setText(s+"");
+                useremail.setText(a+"");
+                userpassword.setText(p+"");
             }
         }
 
